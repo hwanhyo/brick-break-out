@@ -16,6 +16,7 @@ public class MoveableWorld extends World {
     private static final Logger logger = LogManager.getLogger(MoveableWorld.class);
     private int moveCount; // 현재 이동 횟수
     private int maxMoveCount; // 최대 이동 횟수 (0이면 제한 없이 계속 이동합니다.)
+    private int dt; // 단위 시간 (millis)
 
     public MoveableWorld() {
         this.addMouseMotionListener(new MouseAdapter() {
@@ -31,6 +32,14 @@ public class MoveableWorld extends World {
                 repaint();
             }
         });
+    }
+
+    public int getDt() {
+        return dt;
+    }
+
+    public void setDt(int dt) {
+        this.dt = dt;
     }
 
     public MoveableWorld(int maxMoveCount) {
@@ -87,13 +96,17 @@ public class MoveableWorld extends World {
      * 최재 이동 횟수가 0이면, 계속 이동시킵니다.
      */
     public void run() {
+        long startTime = System.currentTimeMillis();
+        long nextMoveTime = startTime + dt;
+
         logger.log(Level.DEBUG, "invoke run()");
         while(maxMoveCount == 0 || moveCount < maxMoveCount) {
             logger.log(Level.TRACE, String.format("invoke move(): moveCount=%d, maxMoveCount=%d",
                     moveCount, maxMoveCount));
             move();
             try {
-                Thread.sleep(50);
+                Thread.sleep(nextMoveTime - System.currentTimeMillis());
+                nextMoveTime += dt;
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

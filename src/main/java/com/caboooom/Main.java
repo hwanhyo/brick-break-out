@@ -32,6 +32,7 @@ public class Main {
                 FRAME_WIDTH, FRAME_HEIGHT));
         JFrame frame = new JFrame();
         BoundedWorld world = new BoundedWorld();
+        world.setDt(60);
         frame.add(world);
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         frame.setVisible(true);
