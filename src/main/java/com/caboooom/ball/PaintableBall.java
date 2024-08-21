@@ -5,7 +5,6 @@ import com.caboooom.Paintable;
 import java.awt.*;
 
 public class PaintableBall extends Ball implements Paintable {
-
     public static final Color DEFAULT_COLOR = Color.BLACK;
     private Color color;
 

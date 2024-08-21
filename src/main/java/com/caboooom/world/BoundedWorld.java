@@ -5,6 +5,9 @@ import com.caboooom.Breakable;
 import com.caboooom.Moveable;
 import com.caboooom.ball.MoveableBall;
 import com.caboooom.bar.Bar;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -12,6 +15,7 @@ import java.util.List;
 
 public class BoundedWorld extends MoveableWorld {
 
+    private static final Logger logger = LogManager.getLogger(BoundedWorld.class);
     private boolean isGameOver = false;
     private boolean isCompleted = false;
 
@@ -54,6 +58,7 @@ public class BoundedWorld extends MoveableWorld {
         }
 
         if(moveable.getMaxY() > getBounds().getMaxY()) {
+            logger.log(Level.INFO, "The ball has hit the ground. Game over!");
             triggerGameOver();
         }
     }
@@ -112,6 +117,9 @@ public class BoundedWorld extends MoveableWorld {
 
     @Override
     public void move() {
+        if(isCompleted || isGameOver) {
+            return;
+        }
         super.move();
 
         int brickCount = 0;
@@ -146,11 +154,14 @@ public class BoundedWorld extends MoveableWorld {
             }
             // 벽돌에 공이 닿으면 벽돌이 깨짐
             for(Bounded b : breaks) {
+                logger.log(Level.DEBUG, String.format("Break the brick of position (%d, %d)",
+                        b.getMinX(), b.getMinY()));
                 remove(b);
             }
 
             // 남은 벽돌이 없으면 게임 종료
             if(brickCount == 0) {
+                logger.log(Level.TRACE, "No bricks left. Game Completed!");
                 isCompleted = true;
                 triggerGameEnd();
             }

@@ -4,12 +4,16 @@ import com.caboooom.Bounded;
 import com.caboooom.Moveable;
 import com.caboooom.ball.MoveableBall;
 import com.caboooom.bar.Bar;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class MoveableWorld extends World {
 
+    private static final Logger logger = LogManager.getLogger(MoveableWorld.class);
     private int moveCount; // 현재 이동 횟수
     private int maxMoveCount; // 최대 이동 횟수 (0이면 제한 없이 계속 이동합니다.)
 
@@ -83,7 +87,10 @@ public class MoveableWorld extends World {
      * 최재 이동 횟수가 0이면, 계속 이동시킵니다.
      */
     public void run() {
+        logger.log(Level.DEBUG, "invoke run()");
         while(maxMoveCount == 0 || moveCount < maxMoveCount) {
+            logger.log(Level.TRACE, String.format("invoke move(): moveCount=%d, maxMoveCount=%d",
+                    moveCount, maxMoveCount));
             move();
             try {
                 Thread.sleep(50);
