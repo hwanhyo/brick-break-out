@@ -12,7 +12,6 @@ import org.apache.logging.log4j.Logger;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-
 public class BoundedWorld extends MoveableWorld {
 
     private static final Logger logger = LogManager.getLogger(BoundedWorld.class);
@@ -133,6 +132,7 @@ public class BoundedWorld extends MoveableWorld {
         int brickCount = 0;
         List<Bounded> breaks = new ArrayList<>();
         for(int i = 0; i < getCount(); i++) {
+            breaks.clear();
             Bounded bounded = boundedList.get(i);
 
             // world의 bound와 충돌시 튕김
