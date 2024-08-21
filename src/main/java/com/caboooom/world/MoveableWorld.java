@@ -2,7 +2,6 @@ package com.caboooom.world;
 
 import com.caboooom.Bounded;
 import com.caboooom.Moveable;
-import com.caboooom.ball.Ball;
 import com.caboooom.ball.MoveableBall;
 import com.caboooom.bar.Bar;
 
@@ -87,7 +86,7 @@ public class MoveableWorld extends World {
         while(maxMoveCount == 0 || moveCount < maxMoveCount) {
             move();
             try {
-                Thread.sleep(10);
+                Thread.sleep(50);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

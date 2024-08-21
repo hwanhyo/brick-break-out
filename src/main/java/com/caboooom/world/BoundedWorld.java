@@ -6,10 +6,14 @@ import com.caboooom.Moveable;
 import com.caboooom.ball.MoveableBall;
 import com.caboooom.bar.Bar;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BoundedWorld extends MoveableWorld {
+
+    private boolean isGameOver = false;
+    private boolean isCompleted = false;
 
     /**
      * BoundedWorld에 속한 Bounded 객체가 BoundedWorld의 범위를 벗어나는지 확인합니다.
@@ -48,12 +52,69 @@ public class BoundedWorld extends MoveableWorld {
                 moveable.getMaxY() > getBounds().getMaxY()) {
             moveable.setDy(-moveable.getDy());
         }
+
+        if(moveable.getMaxY() > getBounds().getMaxY()) {
+            triggerGameOver();
+        }
+    }
+
+    /**
+     * 객체 모두 정지! 화면에 GAME OVER 출력
+     */
+    private void triggerGameOver() {
+        isGameOver = true;
+        stopAllMovement();
+        repaint();
+    }
+
+    /**
+     * 게임 클리어! 화면에 COMPLETE 출력
+     */
+    private void triggerGameEnd() {
+        isCompleted = true;
+        stopAllMovement();
+        repaint();
+    }
+
+    private void stopAllMovement() {
+        for (Bounded bounded : boundedList) {
+            if (bounded instanceof Moveable) {
+                Moveable moveable = (Moveable) bounded;
+                moveable.setDx(0);
+                moveable.setDy(0);
+            }
+        }
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        if (isGameOver) {
+            g.setColor(Color.RED);
+            g.setFont(new Font("Arial", Font.BOLD, 40));
+            String message = "GAME OVER";
+            FontMetrics fm = g.getFontMetrics();
+            int x = (getWidth() - fm.stringWidth(message)) / 2;
+            int y = (getHeight() / 2) + fm.getAscent() / 2;
+            g.drawString(message, x, y);
+        }
+        if (isCompleted) {
+            g.setColor(Color.BLUE);
+            g.setFont(new Font("Arial", Font.BOLD, 40));
+            String message = "COMPLETED!";
+            FontMetrics fm = g.getFontMetrics();
+            int x = (getWidth() - fm.stringWidth(message)) / 2;
+            int y = (getHeight() / 2) + fm.getAscent() / 2;
+            g.drawString(message, x, y);
+        }
     }
 
     @Override
     public void move() {
         super.move();
 
+        int brickCount = 0;
         List<Bounded> breaks = new ArrayList<>();
         for(int i = 0; i < getCount(); i++) {
             Bounded bounded = boundedList.get(i);
@@ -74,11 +135,24 @@ public class BoundedWorld extends MoveableWorld {
                         }
                         ((Moveable) bounded).bounce(other);
                     }
+                    if (other instanceof Breakable) {
+                        brickCount++;
+                    }
                 }
             }
 
+            if (bounded instanceof Breakable) {
+                brickCount++;
+            }
+            // 벽돌에 공이 닿으면 벽돌이 깨짐
             for(Bounded b : breaks) {
                 remove(b);
+            }
+
+            // 남은 벽돌이 없으면 게임 종료
+            if(brickCount == 0) {
+                isCompleted = true;
+                triggerGameEnd();
             }
         }
     }

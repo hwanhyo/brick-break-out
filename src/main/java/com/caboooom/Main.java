@@ -29,9 +29,11 @@ public class Main {
 
         // add balls
         int ballCount = 0;
+        int initialX = FRAME_WIDTH / 2;
+        int initialY = FRAME_HEIGHT - 100;
         while(ballCount < 2) {
             try {
-                MoveableBall ball = new MoveableBall(random.nextInt(FRAME_WIDTH - 50), random.nextInt(FRAME_HEIGHT - 10), 10);
+                MoveableBall ball = new MoveableBall(initialX, initialY, 10);
                 ball.setDx(10);
                 ball.setDy(10);
                 world.add(ball);
@@ -60,6 +62,12 @@ public class Main {
         // add bar
         world.add(new Bar(FRAME_WIDTH - 50,FRAME_HEIGHT + 30, 200));
 
+        // 2초 후 게임 시작
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         world.run();
         frame.repaint();
     }
