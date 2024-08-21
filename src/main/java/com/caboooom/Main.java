@@ -1,6 +1,7 @@
 package com.caboooom;
 
 import com.caboooom.ball.MoveableBall;
+import com.caboooom.bar.Bar;
 import com.caboooom.brick.PaintableBrick;
 import com.caboooom.world.BoundedWorld;
 import javax.swing.*;
@@ -30,7 +31,7 @@ public class Main {
         int ballCount = 0;
         while(ballCount < 2) {
             try {
-                MoveableBall ball = new MoveableBall(random.nextInt(FRAME_WIDTH - 10), random.nextInt(FRAME_HEIGHT - 10), 10);
+                MoveableBall ball = new MoveableBall(random.nextInt(FRAME_WIDTH - 50), random.nextInt(FRAME_HEIGHT - 10), 10);
                 ball.setDx(10);
                 ball.setDy(10);
                 world.add(ball);
@@ -55,6 +56,9 @@ public class Main {
                 world.add(brick);
             }
         }
+
+        // add bar
+        world.add(new Bar(FRAME_WIDTH - 50,FRAME_HEIGHT + 30, 200));
 
         world.run();
         frame.repaint();

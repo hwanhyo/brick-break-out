@@ -2,7 +2,12 @@ package com.caboooom.world;
 
 import com.caboooom.Bounded;
 import com.caboooom.Moveable;
+import com.caboooom.ball.Ball;
 import com.caboooom.ball.MoveableBall;
+import com.caboooom.bar.Bar;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MoveableWorld extends World {
 
@@ -10,6 +15,19 @@ public class MoveableWorld extends World {
     private int maxMoveCount; // 최대 이동 횟수 (0이면 제한 없이 계속 이동합니다.)
 
     public MoveableWorld() {
+        this.addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                int mouseX = e.getX();
+
+                for (Bounded bounded : boundedList) {
+                    if (bounded instanceof Bar) {
+                        ((Bar) bounded).moveTo(mouseX, 0);
+                    }
+                }
+                repaint();
+            }
+        });
     }
 
     public MoveableWorld(int maxMoveCount) {
@@ -45,7 +63,7 @@ public class MoveableWorld extends World {
      * 단위 시간동안 x축 방향으로 dx만큼, y축 방향으로 dy만큼 1회 이동시키고, moveCount를 1만큼 증가시킵니다.
      * 이동이 끝나면 화면을 다시 그립니다.
      *
-     * 만약 moveCount가 maxMoveCount 이상이라면, 실행하지 않고 종료합니다. // TODO 이게 되나?
+     * 만약 moveCount가 maxMoveCount 이상이라면, 실행하지 않고 종료합니다.
      */
     public void move() {
         if(maxMoveCount != 0 && moveCount >= maxMoveCount) {

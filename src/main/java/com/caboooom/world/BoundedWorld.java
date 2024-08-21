@@ -4,6 +4,7 @@ import com.caboooom.Bounded;
 import com.caboooom.Breakable;
 import com.caboooom.Moveable;
 import com.caboooom.ball.MoveableBall;
+import com.caboooom.bar.Bar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class BoundedWorld extends MoveableWorld {
      *                그렇지 않으면 메서드가 동작하지 않습니다.
      */
     public void bounce(Bounded bounded) {
-        if(!(bounded instanceof Moveable)) {
+        if(!(bounded instanceof Moveable) || bounded instanceof Bar) {
             return;
         }
         MoveableBall moveable = (MoveableBall) bounded;
