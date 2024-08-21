@@ -33,30 +33,38 @@ public class BoundedWorld extends MoveableWorld {
     }
 
     /**
-     * Bounded 객체의 이동 방향을 바꿉니다.
+     * Bounded 객체가 BoundedWorld의 경계와 충돌할 때 이동 방향을 조정합니다.
+     * Bounded 객체가 BoundedWorld의 바닥 면에 닿으면, 게임을 종료시킵니다.
      *
-     * 이 메서드는 Bounded 객체가 BoundedWorld의 경계를 벗어났을 때, 이동 방향을 반전시킵니다.
-     * 객체의 경계가 BoundedWorld의 x축 또는 y축 경계를 벗어날 경우,
-     * 각각의 축에 대한 이동 방향이 반전됩니다.
+     * 이 메서드는 Bounded 객체가 BoundedWorld의 경계를 벗어날 때 이동 방향을 반전시킵니다.
+     * 객체가 BoundedWorld의 왼쪽, 오른쪽, 위쪽, 아래쪽 경계와 충돌하면 해당 축에 대한 이동 방향이 반전됩니다.
+     * 또한, 객체가 경계를 벗어나지 않도록 위치를 조정하여 바깥으로 밀려나가는 것을 방지합니다.
      *
-     * @param bounded 이동 방향을 변경할 Bounded 객체.
+     * @param bounded 이동 방향을 조정할 Bounded 객체.
      *                이 객체는 Moveable 인터페이스를 구현해야 합니다.
-     *                그렇지 않으면 메서드가 동작하지 않습니다.
+     *                객체가 Bar의 인스턴스일 경우, 이 메서드는 이동 방향을 변경하지 않습니다.
      */
     public void bounce(Bounded bounded) {
         if(!(bounded instanceof Moveable) || bounded instanceof Bar) {
             return;
         }
         MoveableBall moveable = (MoveableBall) bounded;
-        if(moveable.getMinX() < getBounds().getMinX() ||
-                moveable.getMaxX() > getBounds().getMaxX()) {
+        // 왼쪽 벽에 부딪힐 경우
+        if(moveable.getMinX() < getBounds().getMinX()) {
+            moveable.moveTo((int)getBounds().getMinX() + moveable.getWidth() / 2, moveable.getY()); // 값 보정
             moveable.setDx(-moveable.getDx());
         }
-        if(moveable.getMinY() < getBounds().getMinY() ||
-                moveable.getMaxY() > getBounds().getMaxY()) {
+        // 오른쪽 벽에 부딪힐 경우
+        if(moveable.getMaxX() > getBounds().getMaxX()) {
+            moveable.moveTo((int)getBounds().getMaxX() - moveable.getWidth() / 2, moveable.getY());
+            moveable.setDx(-moveable.getDx());
+        }
+        // 위쪽 벽에 부딪힐 경우
+        if(moveable.getMinY() < getBounds().getMinY()){
+            moveable.moveTo(moveable.getX(), (int)getBounds().getMinY() + moveable.getWidth() / 2);
             moveable.setDy(-moveable.getDy());
         }
-
+        // 아래쪽 벽에 부딪힐 경우
         if(moveable.getMaxY() > getBounds().getMaxY()) {
             logger.log(Level.INFO, "The ball has hit the ground. Game over!");
             triggerGameOver();
