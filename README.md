@@ -1,8 +1,7 @@
 # 벽돌깨기 게임 🧱
 
-Java로 개발한 간단한 벽돌깨기 게임입니다. <br>
-플레이어는 마우스로 바를 조작하여 공을 튕깁니다. <br>
-화면 상단의 벽돌을 모두 깨트리는 것이 목표입니다.
+Java로 개발한 초간단 벽돌깨기 게임입니다. <br>
+조작은 마우스로 가능합니다.
 
 ## 💻 개발 기간 및 개발 환경
 - 개발 기간: 2024.08.20 ~ 2024.08.22
@@ -22,7 +21,8 @@ Java로 개발한 간단한 벽돌깨기 게임입니다. <br>
 게임 플레이 영상 링크: (추가 예정) 
 
 ### 1. **메인 화면**
-플레이어는 시작 시 여러 맵 중 하나를 선택하여 게임을 시작합니다.
+플레이어는 시작 시 난이도와 맵을 순서대로 선택하여 게임을 시작합니다.
+<img width="606" alt="image" src="https://github.com/user-attachments/assets/34d30168-14be-4c3d-acc4-041482d966d7">
    <img width="639" alt="image" src="https://github.com/user-attachments/assets/834df7c0-9d60-49cd-9a1a-35e61a21a482">
 
 ### 2. **게임 플레이 화면**
@@ -35,25 +35,29 @@ Java로 개발한 간단한 벽돌깨기 게임입니다. <br>
 <img width="891" alt="image" src="https://github.com/user-attachments/assets/f7555019-5aa8-40fd-9266-8692cdc646cd">
 
 ## 설치 및 실행 방법 🎮
-1. **프로젝트 클론**
-   ```bash
-   git clone https://github.com/caboooom/brick-break-out.git
-   ```
 
-2. Maven 의존성 설치
-   ```bash
-   mvn clean install
-   ```
+## 설치 및 실행 방법
 
-3. 게임 실행
-   ```bash
-   mvn exec:java -Dexec.mainClass="com.caboooom.Main"
-   ```
-    또는 IDE에서 Main 클래스를 실행합니다.
+1. **배포 파일 다운로드**:
+   - [src/releases/v1.zip](src/releases/v1.zip)를 클릭하여 배포 파일을 다운로드합니다.
+
+2. **압축 풀기**:
+   - 다운로드한 `v1.zip` 파일을 원하는 디렉토리에 압축을 풉니다.
+
+3. **애플리케이션 실행**:
+   - Mac: 압축을 푼 폴더에서 `break-out_macos_0_1_0.dmg`을 더블 클릭하여 설치 후 실행합니다.
+   - Windows: `break-out_windows-x64_0_1_0.exe`를 더블 클릭하여 설치 후 실행합니다.
+
+또는 프로젝트 clone 후 IDE에서 Main 클래스를 실행합니다.
 
 ## 주요 기능
-- 맵 선택 기능: 게임 시작 전에 다양한 맵을 선택할 수 있습니다. 각 맵은 벽돌의 배치가 다릅니다.
-- 배경 음악 및 효과음: 게임 내에서 배경 음악이 무작위로 재생되며, 공이 벽돌에 부딪힐 때 효과음이 재생됩니다.
-- 공과 벽돌의 충돌 처리: 공이 벽돌에 부딪히면 벽돌이 깨지고, 공이 반사됩니다.
+- 난이도 선택 기능
+   - EASY: 이동 속도가 일정한 공 2개
+   - HARD: 이동 속도가 점점 증가하는 공 4개
+   - EXTREME: 이동 속도가 빠르게 증가하는 공 8개
+- 맵 선택 기능
+- 배경 음악 및 효과음: 게임을 실행하면 배경 음악이 반복 재생됩니다. 공이 벽돌에 부딪힐 때, 벽돌이 깨질 때 효과음이 재생됩니다.
+- 공과 벽돌의 충돌 처리: 공이 벽돌에 부딪히면 벽돌이 깨지고, 공이 튕겨집니다..
 
-## 이슈 및 해결 과정
+## 이슈 및 해결 과정 🚨
+[리포지토리 이슈](https://github.com/caboooom/brick-break-out/issues)
