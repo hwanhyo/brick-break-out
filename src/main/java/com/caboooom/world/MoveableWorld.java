@@ -18,7 +18,9 @@ public class MoveableWorld extends World {
     private int maxMoveCount; // 최대 이동 횟수 (0이면 제한 없이 계속 이동합니다.)
     private int dt; // 단위 시간 (millis)
 
-    public MoveableWorld() {
+    public MoveableWorld(int maxMoveCount, int dt) {
+        this.maxMoveCount = maxMoveCount;
+        this.dt = dt;
         this.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
@@ -62,12 +64,12 @@ public class MoveableWorld extends World {
         this.maxMoveCount = maxMoveCount;
     }
 
-    /**
-     * 이동 횟수를 초기화합니다.
-     * 최대 이동 횟수는 변하지 않습니다.
-     */
+    @Override
     public void reset() {
+        super.reset();
         moveCount = 0;
+        maxMoveCount = 0;
+        dt = 0;
     }
 
     /**

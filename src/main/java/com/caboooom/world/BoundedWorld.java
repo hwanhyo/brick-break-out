@@ -2,6 +2,7 @@ package com.caboooom.world;
 
 import com.caboooom.Bounded;
 import com.caboooom.Breakable;
+import com.caboooom.Main;
 import com.caboooom.Moveable;
 import com.caboooom.ball.MoveableBall;
 import com.caboooom.bar.Bar;
@@ -9,6 +10,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,17 @@ public class BoundedWorld extends MoveableWorld {
     private static final Logger logger = LogManager.getLogger(BoundedWorld.class);
     private boolean isGameOver = false;
     private boolean isCompleted = false;
+
+    public BoundedWorld(int maxMoveCount, int dt) {
+        super(maxMoveCount, dt);
+    }
+
+    @Override
+    public void reset() {
+        super.reset();
+        isGameOver = false;
+        isCompleted = false;
+    }
 
     /**
      * BoundedWorld에 속한 Bounded 객체가 BoundedWorld의 범위를 벗어나는지 확인합니다.
@@ -77,6 +90,7 @@ public class BoundedWorld extends MoveableWorld {
         isGameOver = true;
         stopAllMovement();
         repaint();
+        restartGame();
     }
 
     /**
@@ -86,6 +100,33 @@ public class BoundedWorld extends MoveableWorld {
         isCompleted = true;
         stopAllMovement();
         repaint();
+        restartGame();
+    }
+
+    /**
+     * 사용자에게 게임 재시작 여부를 묻고, 재시작하거나 종료합니다.
+     */
+    private void restartGame() {
+        int response = JOptionPane.showOptionDialog(
+                null,
+                "게임이 종료되었습니다!\n다시 시작하시겠습니까?",
+                "게임 오버",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                new String[]{"재시작", "종료"},
+                "재시작"
+        );
+
+        if (response == JOptionPane.YES_OPTION) {
+            try {
+                Main.startGame(Main.getFrame(), this);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            System.exit(0);
+        }
     }
 
     private void stopAllMovement() {

@@ -29,6 +29,10 @@ public class World extends JPanel {
         boundedList.remove(bounded);
     }
 
+    public void reset() {
+        boundedList.clear();
+    }
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
