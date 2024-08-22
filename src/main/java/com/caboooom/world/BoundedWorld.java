@@ -1,11 +1,9 @@
 package com.caboooom.world;
 
-import com.caboooom.Bounded;
-import com.caboooom.Breakable;
-import com.caboooom.Main;
-import com.caboooom.Moveable;
+import com.caboooom.*;
 import com.caboooom.ball.MoveableBall;
 import com.caboooom.bar.Bar;
+import com.caboooom.game.GameInitializer;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -120,7 +118,7 @@ public class BoundedWorld extends MoveableWorld {
 
         if (response == JOptionPane.YES_OPTION) {
             try {
-                Main.startGame(Main.getFrame(), this);
+                GameInitializer.startGame(Main.getFrame(), this);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
