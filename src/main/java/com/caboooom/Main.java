@@ -1,6 +1,6 @@
 package com.caboooom;
 
-import com.caboooom.game.GameInitializer;
+import com.caboooom.gameUtil.GameInitializer;
 import com.caboooom.world.BoundedWorld;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;

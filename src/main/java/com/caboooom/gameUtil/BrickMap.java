@@ -1,8 +1,8 @@
-package com.caboooom.game;
+package com.caboooom.gameUtil;
 
 public class BrickMap {
 
-    public static final int[][] MAP_0 = {
+    public static final int[][] MAP_1 = {
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
             {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
             {1, 0, 0, 1, 1, 1, 1, 0, 0, 1},
@@ -10,7 +10,7 @@ public class BrickMap {
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
     };
 
-    public static final int[][] MAP_1 = {
+    public static final int[][] MAP_2 = {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
             {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -19,7 +19,7 @@ public class BrickMap {
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
     };
 
-    public static final int[][] MAP_2 = {
+    public static final int[][] MAP_3 = {
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {1, 1, 1, 0, 0, 0, 0, 1, 1, 1},
@@ -27,7 +27,7 @@ public class BrickMap {
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
     };
 
-    public static final int[][] MAP_3 = {
+    public static final int[][] MAP_4 = {
             {1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
             {0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
             {1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
@@ -35,7 +35,7 @@ public class BrickMap {
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
     };
 
-    public static final int[][] MAP_4 = {
+    public static final int[][] MAP_5 = {
             {0, 0, 0, 0, 1, 1, 0, 0, 0, 0},
             {0, 0, 0, 1, 1, 1, 1, 0, 0, 0},
             {0, 0, 1, 1, 1, 1, 1, 1, 0, 0},

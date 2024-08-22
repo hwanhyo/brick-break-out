@@ -1,4 +1,4 @@
-package com.caboooom.game;
+package com.caboooom.gameUtil;
 
 import com.caboooom.Main;
 import com.caboooom.ball.MoveableBall;
@@ -23,29 +23,19 @@ public class GameInitializer {
      * @return MAP의 벽돌 배치 정보
      */
     public static int[][] chooseMap() {
-        String[] options = {"MAP1", "MAP2", "MAP3", "MAP4", "MAP5"};
-        int response = JOptionPane.showOptionDialog(
-                null,
-                "MAP을 선택하세요:",
-                "MAP 선택",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.INFORMATION_MESSAGE,
-                null,
-                options,
-                options[0]
-        );
+        int selectedMapIndex = MapSelectionDialog.showMapSelectionDialog(Main.getFrame());
 
-        switch (response) {
+        switch (selectedMapIndex) {
             case 0 :
-                return BrickMap.MAP_0;
-            case 1 :
                 return BrickMap.MAP_1;
-            case 2 :
+            case 1 :
                 return BrickMap.MAP_2;
-            case 3 :
+            case 2 :
                 return BrickMap.MAP_3;
-            case 4 :
+            case 3 :
                 return BrickMap.MAP_4;
+            case 4 :
+                return BrickMap.MAP_5;
             default :
                 return null;
         }

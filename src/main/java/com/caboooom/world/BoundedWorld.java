@@ -3,7 +3,7 @@ package com.caboooom.world;
 import com.caboooom.*;
 import com.caboooom.ball.MoveableBall;
 import com.caboooom.bar.Bar;
-import com.caboooom.game.GameInitializer;
+import com.caboooom.gameUtil.GameInitializer;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
