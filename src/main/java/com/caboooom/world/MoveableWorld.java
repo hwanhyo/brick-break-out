@@ -19,6 +19,7 @@ public class MoveableWorld extends World {
     private int maxMoveCount; // 최대 이동 횟수 (0이면 제한 없이 계속 이동합니다.)
     private int dt; // 단위 시간 (millis)
     protected SoundEffectPlayer soundEffectPlayer;
+    private double speedIncrementRatio;
 
     public MoveableWorld(int maxMoveCount, int dt) {
         this.maxMoveCount = maxMoveCount;
@@ -28,7 +29,8 @@ public class MoveableWorld extends World {
             public void mouseMoved(MouseEvent e) {
                 int mouseX = e.getX();
 
-                for (Bounded bounded : boundedList) {
+                for(int i = 0; i < getCount(); i++) {
+                    Bounded bounded = boundedList.get(i);
                     if (bounded instanceof Bar) {
                         ((Bar) bounded).moveTo(mouseX, 0);
                     }
@@ -67,6 +69,10 @@ public class MoveableWorld extends World {
         this.maxMoveCount = maxMoveCount;
     }
 
+    public void setSpeedIncrementRatio(double speedIncrementRatio) {
+        this.speedIncrementRatio = speedIncrementRatio;
+    }
+
     @Override
     public void reset() {
         super.reset();
@@ -102,6 +108,7 @@ public class MoveableWorld extends World {
     public void run() {
         long startTime = System.currentTimeMillis();
         long nextMoveTime = startTime + dt;
+        long lastUpdate = startTime;
 
         logger.log(Level.DEBUG, "invoke run()");
         while(maxMoveCount == 0 || moveCount < maxMoveCount) {
@@ -115,10 +122,17 @@ public class MoveableWorld extends World {
                 } else {
                     nextMoveTime = currentTime;
                 }
+
+
+                if (currentTime - lastUpdate > 5000) {
+                    dt = Math.max(10, (int)(dt * speedIncrementRatio));
+                    lastUpdate = currentTime;
+                }
                 nextMoveTime += dt;
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
     }
+
 }
