@@ -79,12 +79,14 @@ public class BoundedWorld extends MoveableWorld {
             logger.log(Level.INFO, "The ball has hit the ground. Game over!");
             triggerGameOver();
         }
+        soundEffectPlayer.ballHit();
     }
 
     /**
      * 객체 모두 정지! 화면에 GAME OVER 출력
      */
     private void triggerGameOver() {
+        soundEffectPlayer.gameOver();
         isGameOver = true;
         stopAllMovement();
         repaint();
@@ -95,6 +97,7 @@ public class BoundedWorld extends MoveableWorld {
      * 게임 클리어! 화면에 COMPLETE 출력
      */
     private void triggerGameEnd() {
+        soundEffectPlayer.gameComplete();
         isCompleted = true;
         stopAllMovement();
         repaint();
@@ -189,6 +192,7 @@ public class BoundedWorld extends MoveableWorld {
                             breaks.add(other);
                         }
                         ((Moveable) bounded).bounce(other);
+                        soundEffectPlayer.ballHit();
                     }
                     if (other instanceof Breakable) {
                         brickCount++;
@@ -204,6 +208,7 @@ public class BoundedWorld extends MoveableWorld {
                 logger.log(Level.DEBUG, String.format("Break the brick of position (%d, %d)",
                         b.getMinX(), b.getMinY()));
                 remove(b);
+                soundEffectPlayer.brickBreak();
             }
 
             // 남은 벽돌이 없으면 게임 종료

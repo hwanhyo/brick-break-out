@@ -1,5 +1,6 @@
 package com.caboooom;
 
+import com.caboooom.gameUtil.BGMPlayer;
 import com.caboooom.gameUtil.GameInitializer;
 import com.caboooom.world.BoundedWorld;
 import org.apache.logging.log4j.Level;
@@ -14,8 +15,12 @@ public class Main {
     private static final int DEFAULT_MOVE_COUNT = 0;
     private static final int DEFAULT_DT = 60;
     private static final JFrame frame = new JFrame();
+    private static BGMPlayer bgmPlayer;
 
     public static void main( String[] args ) throws InterruptedException {
+        bgmPlayer = new BGMPlayer("/sounds/retro-city.wav");
+        bgmPlayer.play();
+
         Logger logger = LogManager.getLogger(Main.class);
         logger.log(Level.DEBUG,
                 String.format("Create JFrame and JPanel: width=%d, height=%d", FRAME_WIDTH, FRAME_HEIGHT));
