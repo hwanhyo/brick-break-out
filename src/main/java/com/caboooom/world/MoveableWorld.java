@@ -4,6 +4,7 @@ import com.caboooom.Bounded;
 import com.caboooom.Moveable;
 import com.caboooom.ball.MoveableBall;
 import com.caboooom.bar.Bar;
+import com.caboooom.gameUtil.SoundEffectPlayer;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,6 +18,7 @@ public class MoveableWorld extends World {
     private int moveCount; // 현재 이동 횟수
     private int maxMoveCount; // 최대 이동 횟수 (0이면 제한 없이 계속 이동합니다.)
     private int dt; // 단위 시간 (millis)
+    protected SoundEffectPlayer soundEffectPlayer;
 
     public MoveableWorld(int maxMoveCount, int dt) {
         this.maxMoveCount = maxMoveCount;
@@ -34,6 +36,7 @@ public class MoveableWorld extends World {
                 repaint();
             }
         });
+        soundEffectPlayer = new SoundEffectPlayer();
     }
 
     public int getDt() {
@@ -69,7 +72,6 @@ public class MoveableWorld extends World {
         super.reset();
         moveCount = 0;
         maxMoveCount = 0;
-        dt = 0;
     }
 
     /**
@@ -107,7 +109,12 @@ public class MoveableWorld extends World {
                     moveCount, maxMoveCount));
             move();
             try {
-                Thread.sleep(nextMoveTime - System.currentTimeMillis());
+                long currentTime = System.currentTimeMillis();
+                if (currentTime < nextMoveTime) {
+                    Thread.sleep(nextMoveTime - currentTime);
+                } else {
+                    nextMoveTime = currentTime;
+                }
                 nextMoveTime += dt;
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
