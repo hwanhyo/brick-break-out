@@ -32,7 +32,8 @@ public class World extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        for(Bounded bounded : boundedList) {
+        for(int i = 0; i < boundedList.size(); i++) {
+            Bounded bounded = boundedList.get(i);
             if(bounded instanceof Paintable) {
                 ((Paintable) bounded).paint(g);
             }
