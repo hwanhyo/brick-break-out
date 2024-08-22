@@ -111,7 +111,7 @@ public class BoundedWorld extends MoveableWorld {
         int response = JOptionPane.showOptionDialog(
                 null,
                 "게임이 종료되었습니다!\n다시 시작하시겠습니까?",
-                "게임 오버",
+                "게임 끝",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.INFORMATION_MESSAGE,
                 null,
