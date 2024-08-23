@@ -63,6 +63,9 @@ public class MoveableBall extends PaintableBall implements Moveable {
 
     @Override
     public void bounce(Bounded bounded) {
+        if(bounded instanceof MoveableBall) {
+            return;
+        }
 
         if (getBounds().intersects(bounded.getBounds())) {
             Rectangle intersection = getBounds().intersection(bounded.getBounds());
