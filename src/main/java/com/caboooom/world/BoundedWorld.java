@@ -1,6 +1,9 @@
 package com.caboooom.world;
 
-import com.caboooom.*;
+import com.caboooom.Bounded;
+import com.caboooom.Breakable;
+import com.caboooom.Main;
+import com.caboooom.Moveable;
 import com.caboooom.ball.MoveableBall;
 import com.caboooom.bar.Bar;
 import com.caboooom.gameUtil.GameInitializer;
@@ -79,7 +82,6 @@ public class BoundedWorld extends MoveableWorld {
             logger.log(Level.INFO, "The ball has hit the ground. Game over!");
             triggerGameOver();
         }
-        soundEffectPlayer.ballHit();
     }
 
     /**
@@ -200,9 +202,6 @@ public class BoundedWorld extends MoveableWorld {
                 }
             }
 
-            if (bounded instanceof Breakable) {
-                brickCount++;
-            }
             // 벽돌에 공이 닿으면 벽돌이 깨짐
             for(Bounded b : breaks) {
                 logger.log(Level.DEBUG, String.format("Break the brick of position (%d, %d)",

@@ -8,24 +8,15 @@ import com.caboooom.world.BoundedWorld;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class GameInitializer {
-
-    public enum GameLevel {
-        EASY, HARD, EXTREME
-    }
-
-    private static final int FRAME_WIDTH = 500;
-    private static final int FRAME_HEIGHT = 450;
-    private static final int DEFAULT_BALL_COUNT = 1;
-    private static final int DEFAULT_MOVE_COUNT = 0;
     private static final int DEFAULT_DT = 60;
 
     private static int BALL_COUNT;
     private static int BAR_WIDTH;
-    private static int BAR_INIT_Y;
 
     /**
      * 사용자가 선택한 MAP 정보를 리턴합니다.
@@ -46,7 +37,7 @@ public class GameInitializer {
             case 4 :
                 return BrickMap.MAP_5;
             default :
-                return null;
+                throw new RuntimeException("Map을 찾을 수 없습니다.");
         }
     }
 
@@ -54,12 +45,11 @@ public class GameInitializer {
         Logger logger = LogManager.getLogger(Main.class);
 
         world.reset();
-        world.setMoveCount(DEFAULT_MOVE_COUNT);
         world.setDt(DEFAULT_DT);
         setGameLevel(frame, world);
-        initAndAddBalls(FRAME_WIDTH / 2, FRAME_HEIGHT - 100, BALL_COUNT, world);
-        initAndAddBricks(chooseMap(), FRAME_WIDTH / 10 - 5, 20, world);
-        initAndAddBar(FRAME_WIDTH - 50, BAR_INIT_Y, BAR_WIDTH, world);
+        initAndAddBalls(BALL_COUNT, world);
+        initAndAddBricks(chooseMap(), world);
+        initAndAddBar(world);
 
         logger.log(Level.DEBUG, "Game starts after 2000 millis");
         Thread.sleep(2000);
@@ -86,33 +76,26 @@ public class GameInitializer {
             case 0: // EASY
                 world.setSpeedIncrementRatio(1.0);
                 BALL_COUNT = 2;
-                BAR_WIDTH = 200;
-                BAR_INIT_Y = FRAME_HEIGHT + 30;
+                BAR_WIDTH = (int) (world.getWidth() * 0.5);
                 break;
             case 1: // HARD
-                world.setSpeedIncrementRatio(0.9);
+                world.setSpeedIncrementRatio(0.95);
                 BALL_COUNT = 4;
-                BAR_WIDTH = 100;
-                BAR_INIT_Y = FRAME_HEIGHT - 10;
+                BAR_WIDTH = (int) (world.getWidth() * 0.2);
                 break;
             case 2: // EXTREME
-                world.setSpeedIncrementRatio(0.7);
+                world.setSpeedIncrementRatio(0.9);
                 BALL_COUNT = 8;
-                BAR_WIDTH = 50;
-                BAR_INIT_Y = FRAME_HEIGHT - 30;
-                break;
-            default:
-                world.setSpeedIncrementRatio(1.0);
+                BAR_WIDTH = (int) (world.getWidth() * 0.1);
                 break;
         }
     }
 
-    private static void initAndAddBricks(int[][] map, int brickWidth, int brickHeight, BoundedWorld world) {
-        if(map == null) {
-            throw new RuntimeException();
-        }
-        Logger logger = LogManager.getLogger(Main.class);
+    private static void initAndAddBricks(int[][] map, BoundedWorld world) {
+        int brickWidth = world.getWidth() / 10 - 5;
+        int brickHeight = 20;
         int padding = 5;
+        Logger logger = LogManager.getLogger(Main.class);
         logger.log(Level.DEBUG, String.format("Add bricks: brickCount=%d, width=%d, height=%d, padding=%d",
                 map.length * map[0].length, brickWidth, brickHeight, padding));
 
@@ -129,16 +112,20 @@ public class GameInitializer {
         }
     }
 
-    private static void initAndAddBar(int initialX, int initialY, int width, BoundedWorld world) {
+    private static void initAndAddBar(BoundedWorld world) {
         Logger logger = LogManager.getLogger(Main.class);
-        world.add(new Bar(initialX,initialY, width));
+        int initialX = world.getWidth() / 2;
+        int initialY = world.getHeight() - 15;
+            world.add(new Bar(initialX,initialY, BAR_WIDTH));
         logger.log(Level.DEBUG, String.format("Add bar: width=%d, height=fixedValue", 200));
     }
 
-    private static void initAndAddBalls(int initialX, int initialY, int ballCount, BoundedWorld world) {
+    private static void initAndAddBalls(int ballCount, BoundedWorld world) {
         Logger logger = LogManager.getLogger(Main.class);
+        int initialX = world.getWidth() / 2;
+        int initialY = world.getHeight() - 100;
         logger.log(Level.DEBUG, String.format("Add balls: ballCount=%d, initial position(x, y)=(%d, %d)",
-                DEFAULT_BALL_COUNT, initialX, initialY));
+                ballCount, initialX, initialY));
         int count = 0;
         while(count < ballCount) {
             try {

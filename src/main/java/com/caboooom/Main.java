@@ -6,6 +6,7 @@ import com.caboooom.world.BoundedWorld;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import javax.swing.*;
 
 public class Main {
@@ -14,14 +15,14 @@ public class Main {
     private static final int FRAME_HEIGHT = 450;
     private static final int DEFAULT_MOVE_COUNT = 0;
     private static final int DEFAULT_DT = 60;
+
     private static final JFrame frame = new JFrame();
-    private static BGMPlayer bgmPlayer;
+    private static final Logger logger = LogManager.getLogger();
+    private static final BGMPlayer bgmPlayer = new BGMPlayer("/sounds/retro-city.wav");
 
     public static void main( String[] args ) throws InterruptedException {
-        bgmPlayer = new BGMPlayer("/sounds/retro-city.wav");
         bgmPlayer.play();
 
-        Logger logger = LogManager.getLogger(Main.class);
         logger.log(Level.DEBUG,
                 String.format("Create JFrame and JPanel: width=%d, height=%d", FRAME_WIDTH, FRAME_HEIGHT));
         BoundedWorld world = new BoundedWorld(DEFAULT_MOVE_COUNT, DEFAULT_DT);

@@ -13,10 +13,10 @@ import java.awt.*;
 public class Bar implements Bounded, Paintable, Moveable {
 
     private static final int DEFAULT_WIDTH = 100;
-    private int x;
-    private int y;
+    private int x; // 막대 중심의 x좌표
+    private int y; // 막대 중심의 y좌표
     private int width;
-    private final int height = 30; // 높이 고정
+    private final int height = 20; // 막대 높이 고정
     private int dx;
 
     public Bar(int x, int y) {
@@ -46,12 +46,12 @@ public class Bar implements Bounded, Paintable, Moveable {
 
     @Override
     public int getMinY() {
-        return y - width / 2;
+        return y - height / 2;
     }
 
     @Override
     public int getMaxY() {
-        return y + width / 2;
+        return y + height / 2;
     }
 
     @Override

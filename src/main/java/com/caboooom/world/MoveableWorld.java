@@ -49,10 +49,6 @@ public class MoveableWorld extends World {
         this.dt = dt;
     }
 
-    public MoveableWorld(int maxMoveCount) {
-        this.maxMoveCount = maxMoveCount;
-    }
-
     public int getMoveCount() {
         return moveCount;
     }
@@ -103,7 +99,8 @@ public class MoveableWorld extends World {
 
     /**
      * 최대 이동 횟수만큼 Moveable 객체를 이동시킵니다.
-     * 최재 이동 횟수가 0이면, 계속 이동시킵니다.
+     * 최재 이동 횟수가 0이면, 멈추지 않고 계속 이동시킵니다.
+     * 난이도에 따라, 매 3초마다 이동 주기가 감소합니다.
      */
     public void run() {
         long startTime = System.currentTimeMillis();
@@ -123,9 +120,8 @@ public class MoveableWorld extends World {
                     nextMoveTime = currentTime;
                 }
 
-
-                if (currentTime - lastUpdate > 5000) {
-                    dt = Math.max(10, (int)(dt * speedIncrementRatio));
+                if (currentTime - lastUpdate > 3000) {
+                    dt = Math.max(10, (int)(dt * speedIncrementRatio)); // dt 최솟값은 10으로 제한
                     lastUpdate = currentTime;
                 }
                 nextMoveTime += dt;
@@ -134,5 +130,4 @@ public class MoveableWorld extends World {
             }
         }
     }
-
 }

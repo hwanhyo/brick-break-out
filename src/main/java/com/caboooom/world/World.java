@@ -42,6 +42,5 @@ public class World extends JPanel {
                 ((Paintable) bounded).paint(g);
             }
         }
-
     }
 }
