@@ -1,28 +1,40 @@
 package com.caboooom.gameUtil;
 
-import javax.sound.sampled.*;
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URL;
 
 public class BGMPlayer {
 
-    private Clip clip;
+    private Player player;
+    private Thread playThread;
+    private static final Logger logger = LogManager.getLogger();
 
     public BGMPlayer(String filePath) {
-        try {
-            URL soundURL = getClass().getResource(filePath);
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundURL);
-            clip = AudioSystem.getClip();
-            clip.open(audioStream);
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            e.printStackTrace();
-        }
+        playThread = new Thread(() -> {
+            while (true) { // 무한 반복 재생
+                try (FileInputStream fileInputStream = new FileInputStream(filePath);) {
+                    player = new Player(fileInputStream);
+                    player.play();
+                } catch (JavaLayerException | IOException e) {
+                    logger.error("Music play failed - " + filePath);
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
     public void play() {
-        if (clip != null) {
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
-            clip.start();
+        playThread.start();
+    }
+
+    public void stop() {
+        if(player != null) {
+            player.close();
         }
     }
 }

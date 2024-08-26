@@ -1,28 +1,36 @@
 package com.caboooom.gameUtil;
 
-import javax.sound.sampled.*;
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.net.URL;
 
 public class SoundEffect {
 
-    private Clip clip;
+    private final String filePath;
+    private static final Logger logger = LogManager.getLogger();
 
     public SoundEffect(String filePath) {
-        try {
-            URL soundURL = getClass().getResource(filePath);
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundURL);
-            clip = AudioSystem.getClip();
-            clip.open(audioStream);
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            e.printStackTrace();
-        }
+        this.filePath = filePath;
     }
 
     public void play() {
-        if (clip != null) {
-            clip.setFramePosition(0);
-            clip.start();
+        try (BufferedInputStream bufferedStream = new BufferedInputStream(getClass().getResourceAsStream(filePath));) {
+            Player player = new Player(bufferedStream);
+            new Thread(() -> {
+                try {
+                    player.play();
+                } catch (JavaLayerException e) {
+                    logger.log(Level.ERROR, "Failed to play sound effect: ", filePath);
+                    throw new RuntimeException(e);
+                }
+            }).start();
+        } catch (JavaLayerException | IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

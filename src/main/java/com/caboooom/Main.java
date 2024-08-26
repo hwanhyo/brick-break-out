@@ -18,7 +18,7 @@ public class Main {
 
     private static final JFrame frame = new JFrame();
     private static final Logger logger = LogManager.getLogger();
-    private static final BGMPlayer bgmPlayer = new BGMPlayer("/sounds/retro-city.wav");
+    private static final BGMPlayer bgmPlayer = new BGMPlayer("src/main/resources/sounds/background.mp3");
 
     public static void main( String[] args ) throws InterruptedException {
         bgmPlayer.play();

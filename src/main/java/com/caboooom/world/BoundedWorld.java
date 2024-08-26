@@ -182,6 +182,7 @@ public class BoundedWorld extends MoveableWorld {
             // world의 bound와 충돌시 튕김
             if(bounded instanceof Moveable && isOutOfBounds(bounded)) {
                 bounce(bounded);
+                soundEffectPlayer.ballHit();
             }
 
             // bound끼리 겹치면 서로 튕김
