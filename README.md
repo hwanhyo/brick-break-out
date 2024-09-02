@@ -39,14 +39,14 @@ Java로 개발한 초간단 벽돌깨기 게임입니다. <br>
 ## 설치 및 실행 방법
 
 1. **배포 파일 다운로드**:
-   - [src/releases/v1.zip](src/releases/v1.zip)를 클릭하여 배포 파일을 다운로드합니다.
+   - [src/releases/v2.zip](src/releases/v2.zip)를 클릭하여 배포 파일을 다운로드합니다.
 
 2. **압축 풀기**:
-   - 다운로드한 `v1.zip` 파일을 원하는 디렉토리에 압축을 풉니다.
+   - 다운로드한 `v2.zip` 파일을 원하는 디렉토리에 압축을 풉니다.
 
 3. **애플리케이션 실행**:
-   - Mac: 압축을 푼 폴더에서 `break-out_macos_0_1_0.dmg`을 더블 클릭하여 설치 후 실행합니다.
-   - Windows: `break-out_windows-x64_0_1_0.exe`를 더블 클릭하여 설치 후 실행합니다.
+   - Mac: 압축을 푼 폴더에서 `break-out_macos_0_1_0.dmg`을 더블 클릭하여 설치 후 `Applications/brick-break-out-v2` 경로에 설치된 응용프로그램(`brick-break-out-v2`)을 실행합니다.
+   - Windows: `break-out_windows-x64_0_1_0.exe`를 더블 클릭하여 설치 후 ` C:\Program Files` 경로에 설치된 응용프로그램(`brick-break-out-v2`)을 실행합니다.
 
 또는 프로젝트 clone 후 IDE에서 Main 클래스를 실행합니다.
 
@@ -57,7 +57,7 @@ Java로 개발한 초간단 벽돌깨기 게임입니다. <br>
    - EXTREME: 이동 속도가 빠르게 증가하는 공 8개
 - 맵 선택 기능
 - 배경 음악 및 효과음: 게임을 실행하면 배경 음악이 반복 재생됩니다. 공이 벽돌에 부딪힐 때, 벽돌이 깨질 때 효과음이 재생됩니다.
-- 공과 벽돌의 충돌 처리: 공이 벽돌에 부딪히면 벽돌이 깨지고, 공이 튕겨집니다..
+- 공과 벽돌의 충돌 처리: 공이 벽돌에 부딪히면 벽돌이 깨지고, 공이 튕겨집니다.
 
 ## 이슈 및 해결 과정 🚨
 [리포지토리 이슈](https://github.com/caboooom/brick-break-out/issues)
