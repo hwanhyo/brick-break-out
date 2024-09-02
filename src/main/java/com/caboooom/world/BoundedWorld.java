@@ -15,6 +15,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.caboooom.Main.getFrameHeight;
+import static com.caboooom.Main.getFrameWidth;
+
 public class BoundedWorld extends MoveableWorld {
 
     private static final Logger logger = LogManager.getLogger(BoundedWorld.class);
@@ -39,10 +43,10 @@ public class BoundedWorld extends MoveableWorld {
      * @return bounded가 BoundedWorld의 범위를 벗어나면 true, 그렇지 않으면 false
      */
     public boolean isOutOfBounds(Bounded bounded) {
-        return bounded.getMinX() < getBounds().getMinX() ||
-                bounded.getMaxX() > getBounds().getMaxX() ||
-                bounded.getMinY() < getBounds().getMinY() ||
-                bounded.getMaxY() > getBounds().getMaxY();
+        return bounded.getMinX() < 0 ||
+                bounded.getMaxX() > getFrameWidth() ||
+                bounded.getMinY() < 0 ||
+                bounded.getMaxY() > getFrameHeight();
     }
 
     /**
@@ -63,22 +67,21 @@ public class BoundedWorld extends MoveableWorld {
         }
         MoveableBall moveable = (MoveableBall) bounded;
         // 왼쪽 벽에 부딪힐 경우
-        if(moveable.getMinX() < getBounds().getMinX()) {
-            moveable.moveTo((int)getBounds().getMinX() + moveable.getWidth() / 2, moveable.getY()); // 값 보정
+        if(moveable.getMinX() < 0) {
+            moveable.moveTo( moveable.getWidth() / 2, moveable.getY()); // 값 보정
             moveable.setDx(-moveable.getDx());
         }
-        // 오른쪽 벽에 부딪힐 경우
-        if(moveable.getMaxX() > getBounds().getMaxX()) {
-            moveable.moveTo((int)getBounds().getMaxX() - moveable.getWidth() / 2, moveable.getY());
+        if(moveable.getMaxX() > getFrameWidth()) {
+            moveable.moveTo(getFrameWidth() - moveable.getWidth() / 2, moveable.getY());
             moveable.setDx(-moveable.getDx());
         }
         // 위쪽 벽에 부딪힐 경우
-        if(moveable.getMinY() < getBounds().getMinY()){
-            moveable.moveTo(moveable.getX(), (int)getBounds().getMinY() + moveable.getWidth() / 2);
+        if(moveable.getMinY() < 0){
+            moveable.moveTo(moveable.getX(), moveable.getWidth() / 2);
             moveable.setDy(-moveable.getDy());
         }
         // 아래쪽 벽에 부딪힐 경우
-        if(moveable.getMaxY() > getBounds().getMaxY()) {
+        if(moveable.getMaxY() > getFrameHeight()) {
             logger.log(Level.INFO, "The ball has hit the ground. Game over!");
             triggerGameOver();
         }

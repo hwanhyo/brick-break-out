@@ -37,4 +37,11 @@ public class Main {
         return frame;
     }
 
+    public static int getFrameWidth() {
+        return FRAME_WIDTH;
+    }
+
+    public static int getFrameHeight() {
+        return FRAME_HEIGHT;
+    }
 }
