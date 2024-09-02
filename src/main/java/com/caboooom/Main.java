@@ -17,7 +17,7 @@ public class Main {
     private static final int DEFAULT_DT = 60;
 
     private static final JFrame frame = new JFrame();
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger(Main.class);
     private static final BGMPlayer bgmPlayer = new BGMPlayer("src/main/resources/sounds/background.mp3");
 
     public static void main( String[] args ) throws InterruptedException {

@@ -12,7 +12,7 @@ public class BGMPlayer {
 
     private Player player;
     private Thread playThread;
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger(BGMPlayer.class);
 
     public BGMPlayer(String filePath) {
         playThread = new Thread(() -> {
